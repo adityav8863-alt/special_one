@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Are You Still My Best Friend?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plum: #2B1B33;
+    --plum-deep: #1D1122;
+    --paper: #FFF4E0;
+    --pink: #FF6F91;
+    --pink-deep: #E24E76;
+    --yellow: #FFD166;
+    --teal: #06D6A0;
+    --sky-blue: #6FC3FF;
+    --text: #2B1B33;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,209,102,0.15), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(255,111,145,0.18), transparent 45%),
+      var(--plum);
+    font-family: 'Nunito', sans-serif;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  .sky{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .sky span{
+    position: absolute;
+    font-size: 22px;
+    opacity: 0.35;
+    animation: drift 14s ease-in-out infinite;
+  }
+  @keyframes drift{
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-18px) rotate(8deg); }
+  }
+
+  .wrap{
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 18px;
+  }
+
+  .stage{
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---------- Main card ---------- */
+
+  .card{
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 460px;
+    background: var(--paper);
+    border-radius: 28px;
+    padding: 42px 32px 36px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.35), 0 2px 0 rgba(255,255,255,0.4) inset;
+    text-align: center;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .eyebrow{
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    color: var(--pink-deep);
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+  }
+
+  h1{
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+    color: var(--plum);
+  }
+
+  .sub{
+    font-size: 15px;
+    color: #6b5a72;
+    margin: 0 0 28px;
+  }
+
+  .dots{
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 0 0 24px;
+  }
+  .dots i{
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #e7ddc7;
+    display: block;
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+  .dots i.done{ background: var(--teal); transform: scale(1.1); }
+  .dots i.active{ background: var(--pink); transform: scale(1.3); }
+
+  .question-zone{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 220px;
+  }
+
+  .qmark{
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+
+  .question{
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.35;
+    color: var(--plum);
+    margin: 0 0 34px;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .buttons{
+    position: relative;
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    align-items: center;
+    height: 64px;
+  }
+
+  button{
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    border: none;
+    border-radius: 999px;
+    padding: 14px 32px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .yes-btn{
+    background: var(--teal);
+    color: var(--plum-deep);
+    box-shadow: 0 8px 0 #039e77;
+  }
+  .yes-btn:active{
+    transform: translateY(6px);
+    box-shadow: 0 2px 0 #039e77;
+  }
+  .yes-btn:hover{
+    transform: translateY(-2px);
+  }
+
+  .no-btn{
+    background: var(--pink);
+    color: #fff;
+    box-shadow: 0 8px 0 var(--pink-deep);
+    transition: left 0.4s cubic-bezier(.34,1.56,.64,1), top 0.4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .no-btn.fleeing{
+    position: fixed;
+    z-index: 50;
+  }
+
+  .footer-note{
+    font-size: 12px;
+    color: #a8a0ac;
+    margin-top: 22px;
+  }
+
+  /* Final screen */
+  .final{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+  .final.show{ display: flex; }
+  .final .big-heart{
+    font-size: 52px;
+    margin-bottom: 6px;
+    animation: pop 0.5s ease;
+  }
+  @keyframes pop{
+    0% { transform: scale(0); }
+    70% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+  .final h2{
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 26px;
+    color: var(--plum);
+    margin: 0 0 10px;
+  }
+  .final p{
+    font-size: 15px;
+    color: #6b5a72;
+    max-width: 320px;
+    line-height: 1.5;
+    margin: 0 0 22px;
+  }
+  .restart{
+    background: var(--yellow);
+    color: var(--plum-deep);
+    box-shadow: 0 8px 0 #dba838;
+    font-size: 15px;
+    padding: 11px 26px;
+  }
+  .restart:hover{ transform: translateY(-2px); }
+  .restart:active{ transform: translateY(6px); box-shadow: 0 2px 0 #dba838; }
+
+  .hidden{ display: none !important; }
+
+  /* ---------- Decorative scrapbook boxes ---------- */
+
+  .deco{
+    position: absolute;
+    z-index: 2;
+    background: var(--paper);
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+    padding: 12px 12px 18px;
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    transition: transform 0.35s ease;
+  }
+  .deco:hover{
+    transform: var(--hover-rot, rotate(0deg)) scale(1.06) !important;
+    z-index: 5;
+  }
+  .deco .emoji{
+    font-size: 30px;
+    display: block;
+    background: #f1e8d2;
+    border-radius: 6px;
+    padding: 14px 0;
+    margin-bottom: 8px;
+  }
+  .deco .caption{
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--plum);
+    line-height: 1.1;
+  }
+  .deco .tape{
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 60px;
+    height: 22px;
+    background: rgba(255, 209, 102, 0.85);
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  }
+
+  .deco-1{
+    top: -6%;
+    left: -4%;
+    width: 128px;
+    transform: rotate(-9deg);
+    --hover-rot: rotate(-9deg);
+  }
+  .deco-2{
+    bottom: -8%;
+    left: -8%;
+    width: 118px;
+    transform: rotate(7deg);
+    --hover-rot: rotate(7deg);
+  }
+  .deco-3{
+    top: -10%;
+    right: -6%;
+    width: 128px;
+    transform: rotate(8deg);
+    --hover-rot: rotate(8deg);
+  }
+  .deco-4{
+    bottom: -10%;
+    right: -4%;
+    width: 118px;
+    transform: rotate(-6deg);
+    --hover-rot: rotate(-6deg);
+  }
+  .deco-4 .tape{ background: rgba(6, 214, 160, 0.7); }
+  .deco-2 .tape{ background: rgba(255, 111, 145, 0.75); }
+  .deco-3 .tape{ background: rgba(111, 195, 255, 0.75); }
+
+  .sticker{
+    position: absolute;
+    z-index: 4;
+    font-size: 34px;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.3));
+    animation: bob 5s ease-in-out infinite;
+  }
+  .sticker-1{ top: 6%; left: 32%; animation-delay: 0.2s; font-size: 30px; }
+  .sticker-2{ bottom: 4%; right: 30%; animation-delay: 1.1s; font-size: 26px; }
+  @keyframes bob{
+    0%, 100% { transform: translateY(0) rotate(-4deg); }
+    50% { transform: translateY(-10px) rotate(4deg); }
+  }
+
+  @media (max-width: 820px){
+    .deco{ display: none; }
+    .sticker{ display: none; }
+  }
+
+  @media (max-width: 420px){
+    .card{ padding: 34px 22px 28px; min-height: 400px; }
+    h1{ font-size: 25px; }
+    .question{ font-size: 21px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sky" id="sky"></div>
+
+<div class="wrap">
+  <div class="stage">
+
+    <div class="deco deco-1">
+      <div class="tape"></div>
+      <span class="emoji">🍟</span>
+      <span class="caption">fries &gt; everything</span>
+    </div>
+    <div class="deco deco-2">
+      <div class="tape"></div>
+      <span class="emoji">📞</span>
+      <span class="caption">3am calls only</span>
+    </div>
+    <div class="deco deco-3">
+      <div class="tape"></div>
+      <span class="emoji">🤞</span>
+      <span class="caption">since forever</span>
+    </div>
+    <div class="deco deco-4">
+      <div class="tape"></div>
+      <span class="emoji">🎬</span>
+      <span class="caption">movie nights</span>
+    </div>
+
+    <span class="sticker sticker-1">⭐</span>
+    <span class="sticker sticker-2">💫</span>
+
+    <div class="card">
+
+      <div id="quizView">
+        <div class="eyebrow">a very important survey</div>
+        <h1>Are You Still My Best Friend?</h1>
+        <p class="sub">Answer honestly. There is only one correct answer.</p>
+
+        <div class="dots" id="dots"></div>
+
+        <div class="question-zone">
+          <div class="qmark">💭</div>
+          <div class="question" id="questionText"></div>
+          <div class="buttons">
+            <button class="yes-btn" id="yesBtn">Yes 💛</button>
+            <button class="no-btn" id="noBtn">No</button>
+          </div>
+        </div>
+
+        <div class="footer-note">psst — the "no" button is a little shy</div>
+      </div>
+
+      <div class="final" id="finalView">
+        <div class="big-heart">🎉</div>
+        <h2>I knew it!!</h2>
+        <p id="finalMsg">You answered every single question correctly, which legally makes you my best friend forever. No takebacks.</p>
+        <button class="restart" id="restartBtn">Ask me again</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    "Am I secretly your favorite person?",
+    "Will you laugh at my terrible jokes forever, even the bad ones?",
+    "Can I call you at 3am about something completely unimportant?",
+    "Do you promise to always split the fries evenly?",
+    "Will you still be my friend when we're old and forget everyone's names but each other's?",
+    "Are you glad we found each other?",
+    "Best friends. Forever. No exceptions?"
+  ];
+
+  let current = 0;
+  const questionText = document.getElementById('questionText');
+  const yesBtn = document.getElementById('yesBtn');
+  const noBtn = document.getElementById('noBtn');
+  const dotsWrap = document.getElementById('dots');
+  const quizView = document.getElementById('quizView');
+  const finalView = document.getElementById('finalView');
+  const buttonsZone = document.querySelector('.buttons');
+
+  function buildDots(){
+    dotsWrap.innerHTML = '';
+    questions.forEach((_, i) => {
+      const dot = document.createElement('i');
+      dot.dataset.index = i;
+      dotsWrap.appendChild(dot);
+    });
+    updateDots();
+  }
+
+  function updateDots(){
+    [...dotsWrap.children].forEach((dot, i) => {
+      dot.classList.toggle('done', i < current);
+      dot.classList.toggle('active', i === current);
+    });
+  }
+
+  function showQuestion(){
+    questionText.textContent = questions[current];
+    resetNoButton();
+    updateDots();
+  }
+
+  function resetNoButton(){
+    // back to sitting normally to the right of the Yes button
+    noBtn.classList.remove('fleeing');
+    noBtn.style.left = '';
+    noBtn.style.top = '';
+  }
+
+  function advance(){
+    current++;
+    if (current >= questions.length){
+      quizView.classList.add('hidden');
+      finalView.classList.add('show');
+    } else {
+      showQuestion();
+    }
+  }
+
+  yesBtn.addEventListener('click', advance);
+
+  // Runaway "No" button logic — it starts parked to the right of Yes, and once
+  // the cursor gets close it teleports to a spot relative to the whole screen,
+  // including positions that spill past the edge of the browser window.
+  function fleeFrom(x, y){
+    const btnRect = noBtn.getBoundingClientRect();
+
+    const btnCenterX = btnRect.left + btnRect.width / 2;
+    const btnCenterY = btnRect.top + btnRect.height / 2;
+
+    const dist = Math.hypot(x - btnCenterX, y - btnCenterY);
+    const threshold = 110;
+
+    if (dist < threshold){
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const overflow = 90; // how far past the edge it's allowed to run off-screen
+
+      let newX = -overflow + Math.random() * (vw + overflow * 2 - btnRect.width);
+      let newY = -overflow + Math.random() * (vh + overflow * 2 - btnRect.height);
+
+      // bias the new spot toward the opposite side from the cursor, so it
+      // reads as "fleeing" rather than randomly teleporting
+      const cursorLeftHalf = x < vw / 2;
+      if (cursorLeftHalf) newX = vw * 0.55 + Math.random() * (vw * 0.45 + overflow);
+      else newX = -overflow + Math.random() * (vw * 0.45 + overflow);
+
+      const cursorTopHalf = y < vh / 2;
+      if (cursorTopHalf) newY = vh * 0.55 + Math.random() * (vh * 0.45 + overflow);
+      else newY = -overflow + Math.random() * (vh * 0.45 + overflow);
+
+      noBtn.classList.add('fleeing');
+      noBtn.style.left = newX + 'px';
+      noBtn.style.top = newY + 'px';
+    }
+  }
+
+  document.addEventListener('mousemove', (e) => {
+    if (quizView.classList.contains('hidden')) return;
+    fleeFrom(e.clientX, e.clientY);
+  });
+
+  // touch support: flee on touch near it, and never actually register a tap
+  noBtn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const t = e.touches[0];
+    fleeFrom(t.clientX, t.clientY);
+  }, { passive: false });
+
+  noBtn.addEventListener('mouseenter', (e) => {
+    fleeFrom(e.clientX, e.clientY);
+  });
+
+  document.getElementById('restartBtn').addEventListener('click', () => {
+    current = 0;
+    finalView.classList.remove('show');
+    quizView.classList.remove('hidden');
+    showQuestion();
+  });
+
+  // floating decorative emoji in the background
+  const skyItems = ['💛','✨','🩷','⭐','🤍'];
+  const sky = document.getElementById('sky');
+  for (let i = 0; i < 10; i++){
+    const el = document.createElement('span');
+    el.textContent = skyItems[Math.floor(Math.random() * skyItems.length)];
+    el.style.left = Math.random() * 100 + '%';
+    el.style.top = Math.random() * 100 + '%';
+    el.style.animationDelay = (Math.random() * 6) + 's';
+    el.style.fontSize = (16 + Math.random() * 14) + 'px';
+    sky.appendChild(el);
+  }
+
+  buildDots();
+  showQuestion();
+</script>
+
+</body>
+</html>

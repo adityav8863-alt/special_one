@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation</title>
+    <style>
+        .navigation {
+            background-color: #514f4f;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+        .navigation ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .navigation li {
+            float: left;
+        }
+        .navigation li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            
+        }
+        .navigation li a:hover {
+            text-decoration: none;
+            text-decoration-color: #333;
+            color:red;
+            
+        }
+        .search {
+            float: right;
+            padding: 14px 16px;
+            border-radius: 50px;
+        }
+        .navigation input[type="text"] {
+            padding: 3px;
+            margin-top: -6px;
+            font-size: 17px;
+            border: none;
+            border-radius: 50px;
+        }
+    </style>
+    
+</head>
+<body>
+    <header>
+    <nav class="navigation">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gift.html">Gift</a></li>
+            <li><a href="developerTools.html">Developer Tools</a></li>
+            <div class="search">
+                <input type="text" name="search" id="search" placeholder="Search this website">
+            </div>
+        </ul>
+    </nav>
+    </header>
+</body>
+</html>
